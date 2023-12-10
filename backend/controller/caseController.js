@@ -1,0 +1,63 @@
+const Case = require('../models/caseModel.js');
+
+exports.addCase = async (req, res) => {
+
+    try {
+
+        console.log(req.body);
+
+        const newCase = new Case(req.body);
+        await newCase.save();
+        res.status(201).json({ message: 'Case added successfully', case: newCase });
+
+    } catch (err) {
+        console.log(err.message);
+        res.status(500).json({ error: err.message });
+    }
+}
+
+exports.getAllCases = async (req, res) => {
+    try {
+        const cases = await Case.find();
+        res.json(cases);
+
+    } catch (err) {
+        console.log(err.message);
+        res.status(500).json({ error: err.message });
+    }
+}
+
+exports.updateCase = async (req, res) => {
+    console.log("update case")
+    const { id } = req.params;
+    console.log(req.params);
+    const { data } = req.body;
+    console.log(data)
+    try {
+        const updatedCase = await Case.findByIdAndUpdate({ _id: id }, req.body);
+        if (!updatedCase) {
+            return res.status(404).json({ error: 'Case not found' });
+        }
+        // console.log(updatedCase)
+        await res.json({ message: 'Case updated successfully', case: updatedCase });
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ error: 'Internal server error' });
+    }
+}
+
+exports.deleteCase = async (req, res) => {
+    console.log("delete case")
+    const { caseId } = req.params;
+    console.log(req.params);
+    try {
+        const deletedCase = await Case.findByIdAndDelete(caseId);
+        if (!deletedCase) {
+            return res.status(404).json({ error: 'Case not found' });
+        }
+        res.json({ message: 'Case deleted successfully', case: deletedCase });
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ error: 'Internal server error' });
+    }
+}
