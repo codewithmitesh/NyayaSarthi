@@ -27,7 +27,7 @@ exports.getAllCases = async (req, res) => {
     }
 }
 
-exports.updateCase = async (req, res) => {
+exports.updateCase = async (req, res) => {  
     console.log("update case")
     const { id } = req.params;
     console.log(req.params);
@@ -61,3 +61,15 @@ exports.deleteCase = async (req, res) => {
         res.status(500).json({ error: 'Internal server error' });
     }
 }
+
+// for the judge dashboard
+exports.getCasesByCourtType = async (req, res) => {
+    try {
+      const { courtType } = req.params;
+      const cases = await Case.find({ courtType });
+      res.json(cases);
+    } catch (err) {
+      console.error(err);
+      res.status(500).json({ error: 'Internal server error' });
+    }
+  };
