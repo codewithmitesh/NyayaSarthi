@@ -7,6 +7,26 @@ const userController = require("../controller/userController");
 const render = require("../services/render");
 const { isAuthenticated, isJudge, isLawyer , isAdmin } = require("../middleware/auth");
 
+// To take input from frontend
+// route.post("/submitForm", isAuthenticated, (req, res) => {
+//     try {
+//         const { district, /* other form fields */ } = req.body;
+
+//         // Create a new case instance and save it to the database
+//         const newCase = new Case({ district, /* other form fields */ });
+//         newCase.save();
+
+//         // Respond with a success message
+//         res.status(201).json({ message: 'Form submitted successfully' });
+//     } catch (error) {
+//         // Handle errors and respond with an error message
+//         console.error(error);
+//         res.status(500).json({ message: 'Internal server error' });
+//     }
+// });
+
+
+
 /**
  *  @description Root Route
  *  @method GET /
@@ -34,7 +54,9 @@ try {
  * @description case management
  *  @method GET /allCases
  */
-route.get("/allCases", isAuthenticated, isJudge, caseController.getAllCases);
+// route.get("/allCases", isAuthenticated, isJudge, caseController.getAllCases);
+
+route.get("/allCases", caseController.getAllCases);
 
 /**
  * @description add case

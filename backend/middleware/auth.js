@@ -47,6 +47,18 @@ exports.isLawyer = (req, res, next) => {
   }
 };
 
+exports.isLitigant = (req, res, next) => {
+  const { user } = req;
+
+  if (user && user.type === "Lawyer") {
+    next();
+  } else {
+    return next(
+      new ErrorResponse("Access denied. Only Litigants are allowed.", 403)
+    );
+  }
+};
+
 // check is user is Admin
 exports.isAdmin = (req, res, next) => {
   const { user } = req;

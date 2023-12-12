@@ -8,6 +8,12 @@ const caseSchema = new mongoose.Schema(
         enum: ["District Court", "High Court", "Supreme Court", "Magistrate Court"],
         required: true,
       },
+      courtID: {
+        type: String,
+        enum: ["DC001", "HC001", "SC001", "MC001"],
+        required: true,
+        // unique: true, 
+      },
     district: {
       type: String,
       trim: true,
