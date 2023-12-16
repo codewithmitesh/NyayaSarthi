@@ -1,5 +1,7 @@
 
 const User = require('../models/user.js');
+const Case = require('../models/caseModel.js');
+
 const ErrorResponse = require('../utils/errorResponse');
 
 
@@ -86,4 +88,62 @@ exports.userProfile = async (req, res, next) => {
 }
 
 
+exports.getUserCases = async (req, res, next) => {
+    try {
+    //   const user = await User.findById(req.user.id).populate('cases', 'objectId'); // Adjust 'cases' and 'objectId' based on your model definitions
+  const user = await User.findById(req.user.id).populate('cases');
 
+      if (!user) {
+        return res.status(404).json({
+          success: false,
+          message: 'User not found',
+        });
+      }
+  
+      const caseObjectIds = user.cases.map(caseItem => caseItem.objectId); // Adjust 'objectId' based on your Case model fields
+  
+      res.status(200).json({
+        success: true,
+        caseObjectIds,
+      });
+      
+    } catch (error) {
+      next(error);
+    } 
+
+  };
+  
+  exports.getUserCasesDetails = async (req, res, next) => {
+    try {
+      const user = await User.findById(req.user.id).populate({
+        path: 'cases',
+        populate: {
+          path: 'objects', // Modify 'objects' based on your Case model fields
+        },
+      });
+  
+      if (!user) {
+        return res.status(404).json({
+          success: false,
+          message: 'User not found',
+        });
+      }
+  
+      console.log('User Cases:', user.cases);
+  
+      // Log the objects within each case
+      user.cases.forEach((caseItem) => {
+        console.log(`Case ${caseItem._id}:`, caseItem);
+      });
+  
+      res.status(200).json({
+        success: true,
+        cases: user.cases,
+      });
+  
+    } catch (error) {
+      console.error(error);
+      next(error);
+    }
+  };
+  
