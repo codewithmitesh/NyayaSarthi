@@ -71,3 +71,25 @@ exports.deleteUser = async (req, res, next) => {
         return next(error);
     }
 }
+
+exports.getUserCasesDetails = async (req, res, next) => {
+  try {
+    const user = await User.findById(req.user.id).populate("cases");
+
+    if (!user) {
+      return res.status(404).json({
+        success: false,
+        message: "User not found",
+      });
+    }
+
+    res.status(200).json({
+      success: true,
+      user: {
+        cases: user.cases,
+      },
+    });
+  } catch (error) {
+    next(error);
+  }
+};

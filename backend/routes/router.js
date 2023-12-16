@@ -5,27 +5,12 @@ const authController = require("../controller/authController");
 const userController = require("../controller/userController");
 
 const render = require("../services/render");
-const { isAuthenticated, isJudge, isLawyer , isAdmin } = require("../middleware/auth");
-
-// To take input from frontend
-// route.post("/submitForm", isAuthenticated, (req, res) => {
-//     try {
-//         const { district, /* other form fields */ } = req.body;
-
-//         // Create a new case instance and save it to the database
-//         const newCase = new Case({ district, /* other form fields */ });
-//         newCase.save();
-
-//         // Respond with a success message
-//         res.status(201).json({ message: 'Form submitted successfully' });
-//     } catch (error) {
-//         // Handle errors and respond with an error message
-//         console.error(error);
-//         res.status(500).json({ message: 'Internal server error' });
-//     }
-// });
-
-
+const {
+  isAuthenticated,
+  isJudge,
+  isLawyer,
+  isAdmin,
+} = require("../middleware/auth");
 
 /**
  *  @description Root Route
@@ -37,7 +22,12 @@ route.get("/", render.homeRoutes);
  * @description get cases by court type
  * @method GET /getCasesByCourtType/:courtType
  */
-route.get('/getCasesByCourtType/:courtType', isAuthenticated, isJudge, caseController.getCasesByCourtType);
+route.get(
+  "/getCasesByCourtType/:courtType",
+  isAuthenticated,
+  isJudge,
+  caseController.getCasesByCourtType
+);
 
 /**
  * @description update case
@@ -69,7 +59,12 @@ route.post("/addCase", isAuthenticated, isLawyer, caseController.addCase);
  * @description delete case
  * @method DELETE /deleteCase
  */
-route.delete("/deleteCase/:caseId", isAuthenticated, isLawyer, caseController.deleteCase);
+route.delete(
+  "/deleteCase/:caseId",
+  isAuthenticated,
+  isLawyer,
+  caseController.deleteCase
+);
 
 //! Authentication Routes
 
@@ -105,7 +100,7 @@ route.get("/me", isAuthenticated, authController.userProfile);
  * @description get all users
  * @method GET /allusers
  */
-route.get("/allusers", isAuthenticated, isAdmin ,userController.allUsers);
+route.get("/allusers", isAuthenticated, isAdmin, userController.allUsers);
 
 /**
  * @description get Single users
@@ -118,5 +113,11 @@ route.get("/user/:id", isAuthenticated, userController.singleUser);
  * @method PUT /users
  */
 route.put("/user/edit/:id", isAuthenticated, userController.editUser);
+
+/**
+ * @description get user cases with details
+ * @method GET /userCasesDetails
+ */
+route.get("/getUserCases", isAuthenticated, authController.getUserCases);
 
 module.exports = route;
