@@ -7,7 +7,7 @@ const credentials = require('./middleware/credentials.js');
 const mongoose = require("mongoose");
 const cookieParser = require("cookie-parser");
 const errorHandler = require("./middleware/error.js");
-
+const temp1 = require('./MLFQ/mlfq.js');
 const app = express();
 app.use(morgan('tiny'));
 
@@ -23,10 +23,10 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 // error middleware
 app.use(errorHandler);
+dotenv.config();
 
 const port = process.env.PORT || 5000;
 
-dotenv.config();
 // connect mongodb from here
 const connect = () => {
     mongoose
@@ -39,6 +39,7 @@ const connect = () => {
         });
 };
 
+
 //routes 
 const Route = require('./routes/router.js');
 app.use('/api/', Route);
@@ -48,3 +49,14 @@ app.listen(port, () => {
     connect();
     console.log("Connected to Server Successfully on port " + port);
 });
+
+const callMlfq = () => {
+    temp1().then(() => {
+        console.log("this is it")
+    }).catch((err) => {
+        console.log(err);
+    });
+}
+
+// callMlfq();
+
