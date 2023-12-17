@@ -5,7 +5,7 @@ const authController = require("../controller/authController");
 const userController = require("../controller/userController");
 
 const render = require("../services/render");
-const { isAuthenticated, isJudge, isLawyer , isAdmin } = require("../middleware/auth");
+const { isAuthenticated, isJudge, isLawyer, isAdmin } = require("../middleware/auth");
 
 // To take input from frontend
 // route.post("/submitForm", isAuthenticated, (req, res) => {
@@ -32,12 +32,6 @@ const { isAuthenticated, isJudge, isLawyer , isAdmin } = require("../middleware/
  *  @method GET /
  */
 route.get("/", render.homeRoutes);
-
-/**
- * @description get cases by court type
- * @method GET /getCasesByCourtType/:courtType
- */
-route.get('/getCasesByCourtType/:courtType', isAuthenticated, isJudge, caseController.getCasesByCourtType);
 
 /**
  * @description update case
@@ -105,7 +99,7 @@ route.get("/me", isAuthenticated, authController.userProfile);
  * @description get all users
  * @method GET /allusers
  */
-route.get("/allusers", isAuthenticated, isAdmin ,userController.allUsers);
+route.get("/allusers", isAuthenticated, isAdmin, userController.allUsers);
 
 /**
  * @description get Single users
@@ -130,5 +124,37 @@ route.get("/getUserCases", isAuthenticated, authController.getUserCases);
  * @method GET /allusers
  */
 route.get("/usertype", isAuthenticated, authController.usertype);
+
+
+/**
+ * Judge Routes
+ * @description get cases by court type
+ * @method GET /getCasesByCourtType/:courtType
+ */
+
+route.get('/getCasesByCourtID/:courtID', isAuthenticated, isJudge, caseController.getCasesByCourtID);
+
+// judge ka case severity change karne wala
+// route.put();
+
+/**
+ * courtAdmin Routes
+ * @description scheduleCases by court admin
+ */
+
+// get all cases :- input court ID unscheduled and scheduled all
+
+
+
+// schedule the cases wala, schedule karne ke baad wahi table me bulk insert karna simple 
+//Algo
+// schedue input - CourtID,-> fetch all cases of that tbale
+// put it into the schedule function
+// get all cases scheduled output 
+// bulk insert in that courtID wala table
+
+
+
+
 
 module.exports = route;

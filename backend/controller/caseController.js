@@ -1,32 +1,43 @@
 const mongoose = require('mongoose');
 const Case = require('../models/caseModel.js');
+const MasterCase = mongoose.model('MasterCase', Case.schema);
+
 
 exports.addCase = async (req, res) => {
     try {
-      const { courtID, ...restOfData } = req.body;
-  
-      // Assuming req.user contains the user information
-      const userID = req.user._id;
-  
-      // Create a new collection based on courtID
-      const caseModel = mongoose.model(`Case_${courtID}`, Case.schema);
-  
-      // Create a new document using the specific model
-      const newCase = new caseModel({ courtID, userID, ...restOfData });
-  
-      // Save the document to the specific courtID table
-      await newCase.save();
-  
-      // Save the document to the mastercases table
-      const masterCase = new MasterCase({ courtID, userID, ...restOfData });
-      await masterCase.save();
-  
-      res.status(201).json({ message: "Case added successfully", case: newCase });
+        const { courtID, ...restOfData } = req.body;
+
+        // Assuming req.user contains the user information
+        const userID = req.user._id;
+
+        console.log(req.body);
+        // console.log(req)
+        // here we have to request the model to get severity and then update this severity store the data accordingly
+
+
+        // Create a new collection based on courtID
+        const caseModel = mongoose.model(`Case_${courtID}`, Case.schema);
+
+        // Create a new document using the specific model
+        const newCase = new caseModel({ courtID, userID, ...restOfData });
+
+        // Save the document to the specific courtID table
+        // await newCase.save();
+
+
+
+        // Save the document to the mastercases table
+        // const masterCase = new MasterCase({ courtID, userID, ...restOfData });
+        const masterCase = new MasterCase({ courtID, userID, ...restOfData });
+
+        // await masterCase.save();
+
+        res.status(201).json({ message: "Case added successfully", case: newCase });
     } catch (err) {
-      console.log(err.message);
-      res.status(500).json({ error: err.message });
+        console.log(err.message);
+        res.status(500).json({ error: err.message });
     }
-  };
+};
 
 exports.getAllCases = async (req, res) => {
     try {
@@ -39,7 +50,7 @@ exports.getAllCases = async (req, res) => {
     }
 }
 
-exports.updateCase = async (req, res) => {  
+exports.updateCase = async (req, res) => {
     console.log("update case")
     const { id } = req.params;
     console.log(req.params);
@@ -75,13 +86,16 @@ exports.deleteCase = async (req, res) => {
 }
 
 // for the judge dashboard
-exports.getCasesByCourtType = async (req, res) => {
+exports.getCasesByCourtID = async (req, res) => {
     try {
-      const { courtType } = req.params;
-      const cases = await Case.find({ courtType });
-      res.json(cases);
+        const { courtID } = req.params;
+        console.log(courtID);
+        const cases = await MasterCase.find({ courtID });
+        res.json(cases);
     } catch (err) {
-      console.error(err);
-      res.status(500).json({ error: 'Internal server error' });
+        console.error(err);
+        res.status(500).json({ error: 'Internal server error' });
     }
-  };
+};
+
+
