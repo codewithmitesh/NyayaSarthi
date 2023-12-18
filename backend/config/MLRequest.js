@@ -3,7 +3,7 @@ const API_ENDPOINT = "us-central1-aiplatform.googleapis.com";
 const PROJECT_ID = "global-incline-407709";
 const MODEL_ID = "text-bison";
 const LOCATION_ID = "us-central1";
-const TOKEN = `ya29.a0AfB_byCaMJfoEEjpiUXvx5Zw8oicBmL5FmoOSx3BIxQKdn6Ig_zHfABtS6SL1XIiWfLpKKG9N-drURkuDEiI_VwsGNsOv94JQAdt7iC1i4AsSrY0RqZS07IrSISQ5Ov4EgTIToWJXnBe2NQlnCqItlM6wBnjDZ6ZBzvrrdJq2NlNC35b7MUjk-xsG5ACApSu4n3A4SP1oSYby2X-c_HYACE_sMDWmAZHyxtgrsrVQdF1wXd0PqjJiC8SNTPGT6N1oXn_715Q-EMjqZlfYuAVsiAp8FtW1W4hZLwS3F_8WbcDZjSXsIDWGe8rG38T1KgUjAEeY_8qhSjxzCcIj07dy69yfIKuRS_L-JLvwsiznkUh-2w2TndF0vxpg_rAS2808fOcMXEXSlRlFXgpFtKj13VH1qbNcvKsaCgYKAfUSARISFQHGX2MivXb8Wm6e1ZVYiWOP6tkMWg0423`;
+const TOKEN = `ya29.a0AfB_byBLgoShq9ZILtpLu61vREPDAh5iVZv3oqAT3CO1lYZ4_FEbJL_kJVIJE58wcPW1XmNdjahPys2z0fkJuZCEdF7MevKrxaDVrmI7FkZb_-tF-_tP1MVBuV4o5PaP8cdrLJht7jjewLpjbW375XXUZOkkpE5cxwH8M6xjI6dWrhvyWpSux0c38ULpj8YIkTNFxuiqBdr6QuOOv0HXRLPbTty69ju8fsKmcZIVhI-Z5pq57MmTkbWBIh0xY705DI4D2auEZI-rSQrcS7VzLEtaLy1gydlvx7cLwEmy3OOwzIWcQHiULSNdCtC-M0SLpDliHNgcDhrcG3C5wl2A-5lucJX3vdLsuX8rI0fXicUKW1mG-e2Q0A3zoL8w9D8esqpczLFnGr26vSsnflj_U-a76oowfqVeaCgYKAZESARISFQHGX2Mil_8kTujZdKX4XTSTeBfUDg0423`;
 
 
 app.post('/predict', async (req, res) => {
@@ -17,9 +17,18 @@ app.post('/predict', async (req, res) => {
         const data = {
             instances: [
                 {
-                    content: `Case ID - ${caseId}
-                    Sections acts : ${sectionsActs}
-                    case description : ${caseDescription}`,
+                    content: `You are an assistant that should answer any questions based on Indian cases also use Indian penal codes and states laws and all the laws of India if asked, analyze the input to give severity of the case(from 1 to 10 ) based case complexity and nature of case and time to dispose the case and max punishable year from 1-10 along with the sections that could be imposed on it.
+        
+                  input: Case ID
+                  input: Sections acts
+                  input: case description 
+                  output: Severity of the Case :
+        
+                  input: Case ID - ${caseId}
+                  input: Sections acts : ${sectionsActs}
+                  input: case description : ${caseDescription}
+                  output:
+                  `,
                 },
             ],
             parameters: {

@@ -3,13 +3,14 @@ const route = express.Router();
 const caseController = require("../controller/caseController");
 const authController = require("../controller/authController");
 const userController = require("../controller/userController");
-
+const scheduleController = require("../controller/scheduleController")
 const render = require("../services/render");
 const {
   isAuthenticated,
   isJudge,
   isLawyer,
   isAdmin,
+  isCourtAdmin
 } = require("../middleware/auth");
 
 // To take input from frontend
@@ -152,5 +153,30 @@ route.get("/getUserCasesDetails", isAuthenticated, caseController.getUserCasesDe
  * @method GET /allusers
  */
 route.get("/usertype", isAuthenticated, authController.usertype);
+
+//! routes for judge
+/**
+ * 
+ * @description schedule all cases, input courtId
+ * @method POST /schedule
+ */
+
+route.post('/scheduleCasesJudge', isAuthenticated, isJudge, scheduleController.scheduleCases);
+
+/**
+ * @description update the Sverity of the, input CourtID and CaseID
+ * @method PUT
+ */
+route.put('/updateSeverity', isAuthenticated, isJudge, scheduleController.updateSeverity);
+
+//! Court Admin routes
+
+/**
+ * @description schedule all cases 
+ */
+route.post('/scheduleCases', isAuthenticated, isCourtAdmin, scheduleController.scheduleCases);
+
+
+
 
 module.exports = route;

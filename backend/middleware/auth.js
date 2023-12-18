@@ -33,6 +33,20 @@ exports.isJudge = (req, res, next) => {
     );
   }
 };
+// check if the user is courtAdmin
+exports.isCourtAdmin = (req, res, next) => {
+  // Assuming that req.user is set by the isAuthenticated middleware
+  const { user } = req;
+
+  if (user && user.type === "courtAdmin") {
+    next();
+  } else {
+    return next(
+      new ErrorResponse("Access denied. Only Judges are allowed.", 403)
+    );
+  }
+};
+
 
 // check is user is Lawyer
 exports.isLawyer = (req, res, next) => {
