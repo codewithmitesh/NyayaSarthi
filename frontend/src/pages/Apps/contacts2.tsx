@@ -10,6 +10,7 @@ const Contacts = () => {
   const dispatch = useDispatch();
   const [filteredItems, setFilteredItems] = useState<any[]>([]);
   const [courtId, setcourtId] = useState<string>("");
+  const [dataRec, setdataRec] = useState<any>([]);
   useEffect(() => {
     dispatch(setPageTitle("Contacts"));
     fetchData();
@@ -17,9 +18,15 @@ const Contacts = () => {
 
   const fetchData = async () => {
     try {
-      const response = await axiosInstance.post("/scheduleCases", { courtId });
-      const data = response.data;
-      setFilteredItems(data);
+      console.log(courtId);
+      const response = await axiosInstance.post("/scheduleCases", {
+        courtID: courtId,
+      });
+      const dataRec = response.data;
+      console.log("This is data", dataRec);
+      setdataRec(dataRec);
+      // setFilteredItems([...data]);
+      console.log("This is filtered data", dataRec);
     } catch (error) {
       console.error("Error fetching data:", error);
     }
@@ -68,12 +75,12 @@ const Contacts = () => {
               </tr>
             </thead>
             <tbody>
-              {filteredItems.map((data: any) => (
-                <tr key={data.id}>
-                  <td>{data.Petitioner}</td>
-                  <td>{data.DateofCauseofAction}</td>
-                  <td>{data.CaseType}</td>
-                  <td>{data.sevarity}</td>
+              {dataRec.map((data: any) => (
+                <tr key={data._id}>
+                  <td>{data.petitioner.name}</td>
+                  <td>{data.causeOfAction}</td>
+                  <td>{data.caseDetails.caseType}</td>
+                  <td>{data.severity}</td>
                   <td>
                     <div className="flex gap-4 items-center justify-center">
                       <button

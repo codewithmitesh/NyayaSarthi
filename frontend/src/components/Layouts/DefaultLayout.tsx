@@ -54,7 +54,7 @@ const DefaultLayout = ({ children }: PropsWithChildren) => {
 
   useEffect(() => {
     const fetchData = async () => {
-      const userData = "second";
+      const userData = "third";
       changeUser(userData);
     };
     fetchData();
@@ -138,11 +138,14 @@ const DefaultLayout = ({ children }: PropsWithChildren) => {
         >
           {/* BEGIN SIDEBAR */}
           {user ? (
+            // lawyer
             user === "first" ? (
               <Sidebar />
-            ) : user === "second" ? (
+            ) : // courtAdmin
+            user === "second" ? (
               <Sidebar2 />
-            ) : user === "third" ? (
+            ) : // judge
+            user === "third" ? (
               <Sidebar3 />
             ) : null
           ) : null}

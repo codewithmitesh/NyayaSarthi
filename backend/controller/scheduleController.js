@@ -103,7 +103,9 @@ const scheduler = require("./scheduler.js")
 
 exports.scheduleCases = async (req, res) => {
     try {
+        console.log("working")
         const { courtID } = req.body;
+        console.log(courtID)
         const caseModel = mongoose.model(`Case_${courtID}`, Case.schema);
 
         const cases = await caseModel.find({ courtID });
