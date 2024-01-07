@@ -51,11 +51,9 @@ route.get(
  * @description update case
  * @method PUT /updateCase
  */
-try {
-  route.put( "/updateCase/:id", isAuthenticated, isLawyer, caseController.updateCase );
-} catch (err) {
-  console.log(err);
-}
+
+route.put("/updateCase/:id", isAuthenticated, isLawyer, caseController.updateCase);
+
 /**
  * @description case management
  *  @method GET /getCaseById

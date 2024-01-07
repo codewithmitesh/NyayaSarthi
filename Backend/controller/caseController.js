@@ -107,77 +107,104 @@ exports.addCase = async (req, res) => {
 
     // const url = `https://${API_ENDPOINT}/v1/projects/${PROJECT_ID}/locations/${LOCATION_ID}/publishers/google/models/${MODEL_ID}:predict`;
 
-    const url = `https://us-central1-aiplatform.googleapis.com/v1/projects/global-incline-407709/locations/us-central1/publishers/google/models/text-bison:predict`;
+    // const url = `https://us-central1-aiplatform.googleapis.com/v1/projects/global-incline-407709/locations/us-central1/publishers/google/models/text-bison:predict`;
 
-    const TOKEN = `ya29.a0AfB_byBKKdusjAy44CCeZsw7GcG9UJm8KepkX5fBFMZ390hVi-EF9scVaYlZFtSOCw9GoFtlPofUTyfibaHxhXboFpD01jjlimoGMBe5BtJG2MCBhjlxapArCXuiiSUxY8Xj4py_9VsNk-lFUS5nrkKFKoczZRt3hroljCV7T7kAI79C6Ext8FhyPZ37O29qgRM_0UXYon_CGkF-aHRoLCQ28W_MCZgA9E2I0WFdWhqYcXc7ipvedglGMWyQBzDIC0JA7aBUzYqt4tenKtSmUZm1T-3kC99Zy91yDxDOBqCpxxzliRWZb_uDOPBASrCkLGIVAfvIy6ZAHI7wvxwfg0vi3u76o8QNpymhlcVPx0FxTLwbjtMsLha9b_Qos_-gW2IfLeYeCxhmo8ynvJRL-b9zS_ySqY4GaCgYKAaMSARISFQHGX2Mirs3bXBsaSlFupr3hnk1HYA0423`;
+    // const TOKEN = ``;
 
-    let caseId = "CS001";
+    // let caseId = "CS001";
 
-    const data = {   
-      instances: [
-        {
-          content: `You are an assistant that should answer any questions  based on Indian cases also use Indian penal codes and states laws and all the laws of India  if asked, analyze the input to give severity of the case(from 1 to 10 ) based case complexity and nature of case and time to dispose the case and max punishable year from 1-10 along with the sections that could be imposed on it.
-          and return Severity of the Case like /Severity of the Case: (\d+)/ this regex
-    
-              input: Case ID
-              input: Sections acts
-              input: case description 
-              output: Severity of the Case :
-    
-              input: Case ID - ${caseId}
-              input: Sections acts : ${sectionsActs}
-              input: case description : ${caseDescriptionforModel}
-              output:
-              `,
-        },
-      ],
-      parameters: {
-        candidateCount: 2,
-        maxOutputTokens: 1024,
-        temperature: 0.9,
-        topP: 1,
-        topK: 23,
-      },
-    };
+    // const data = {
+    //   instances: [
+    //     {
+    //       content: `You are an assistant that should answer any questions  based on Indian cases also use Indian penal codes and states laws and all the laws of India  if asked, analyze the input to give severity of the case(from 1 to 10 ) based case complexity and nature of case and time to dispose the case and max punishable year from 1-10 along with the sections that could be imposed on it.
+    //       and return Severity of the Case like /Severity of the Case: (\d+)/ this regex
 
-    const response = await axios.post(url, data, {
-      headers: {
-        Authorization: `Bearer ${TOKEN}`,
-        "Content-Type": "application/json",
-      },
-    });
+    //           input: Case ID
+    //           input: Sections acts
+    //           input: case description 
+    //           output: Severity of the Case :
 
-    console.log(response);
-    const prediction = response.data.predictions[0].content;
-    console.log(prediction);
+    //           input: Case ID - ${caseId}
+    //           input: Sections acts : ${sectionsActs}
+    //           input: case description : ${caseDescriptionforModel}
+    //           output:
+    //           `,
+    //     },
+    //   ],
+    //   parameters: {
+    //     candidateCount: 2,
+    //     maxOutputTokens: 1024,
+    //     temperature: 0.9,
+    //     topP: 1,
+    //     topK: 23,
+    //   },
+    // };
+
+    // const response = await axios.post(url, data, {
+    //   headers: {
+    //     Authorization: `Bearer ${TOKEN}`,
+    //     "Content-Type": "application/json",
+    //   },
+    // });
+
+    // console.log(response);
+    // const prediction = response.data.predictions[0].content;
+    // console.log(prediction);
 
     // Function to extract severity of the case using regex and convert to number
-    function extractSeverityAsNumber(prediction) {
-      const severityRegex = /Severity of the Case: (\d+)/;
-      // const severityRegex = /\Severity of the Case:\ (\d+(?:\/\d+)?)/;
-      // const severityRegex = /\Severity of the Case:\ (\d+(?:\/\d+)?)/;
-      console.log(severityRegex);
-      const match = prediction.match(severityRegex);
-      if (match && match.length > 1) {
-        const severityString = match[1];
-        return parseInt(severityString, 10);
-      } else {
-        return null;
-      }
-    }
+    // function extractSeverityAsNumber(prediction) {
+    //   const severityRegex = /Severity of the Case: (\d+)/;
+    //   // const severityRegex = /\Severity of the Case:\ (\d+(?:\/\d+)?)/;
+    //   // const severityRegex = /\Severity of the Case:\ (\d+(?:\/\d+)?)/;
+    //   console.log(severityRegex);
+    //   const match = prediction.match(severityRegex);
+    //   if (match && match.length > 1) {
+    //     const severityString = match[1];
+    //     return parseInt(severityString, 10);
+    //   } else {
+    //     return null;
+    //   }
+    // }
 
     // Extracting severity of the case as a number
-    const getSeverity = extractSeverityAsNumber(prediction);
-    let severity = getSeverity;
-    if (severity !== null) {
-      console.log(`Severity of the case: ${severity}`);
-    } else {
-      severity = 10;
-      // console.log("Severity information not found in the provided data.");
-    }
+    // const getSeverity = extractSeverityAsNumber(prediction);
+    // let severity = getSeverity;
+    // if (severity !== null) {
+    //   console.log(`Severity of the case: ${severity}`);
+    // } else {
+    //   severity = 10;
+    //   // console.log("Severity information not found in the provided data.");
+    // }
 
-    console.log(severity);
+    // console.log(severity);
     // const severity = 155153;
+
+
+    function generateRandomNumber(caseDescriptionforModel) {
+      const highRiskWords = ["murder", "killed", "raped", /* Add more high-risk words as needed */];
+      const mediumRiskWords = ["robbery", "attempted robbery", "harassment", "child labour", /* Add more medium-risk words as needed */];
+
+      // Convert input string to lowercase for case-insensitive matching
+      const lowercaseInput = caseDescriptionforModel.toLowerCase();
+
+      // Check if the input string contains any high-risk words
+      const containsHighRiskWord = highRiskWords.some(word => lowercaseInput.includes(word));
+
+      // Check if the input string contains any medium-risk words
+      const containsMediumRiskWord = mediumRiskWords.some(word => lowercaseInput.includes(word));
+
+      // Generate and return a random number based on the risk level
+      if (containsHighRiskWord) {
+        return Math.round(Math.random()) + 9; // Either 9 or 10 for high-risk words
+      } else if (containsMediumRiskWord) {
+        return Math.round(Math.random()) + 6; // Either 6, 7, or 8 for medium-risk words
+      } else {
+        return Math.floor(Math.random() * 5) + 1; // Random number between 1 and 10 for other cases
+      }
+    }
+    const severity = generateRandomNumber(caseDescriptionforModel);
+
+
     // Create a new document using the specific model
     // Create a new document using the specific model
     const newCase = new caseModel({ courtID, userID, severity, ...restOfData });
@@ -364,3 +391,6 @@ exports.getCasesByCourtType = async (req, res) => {
 //     next(error);
 //   }
 // };
+exports.updateCase = async (req, res) => {
+
+}

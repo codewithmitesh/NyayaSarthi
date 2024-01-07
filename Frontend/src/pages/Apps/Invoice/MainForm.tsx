@@ -5,48 +5,46 @@ import axios, { AxiosResponse } from "axios";
 import { axiosInstance } from "../../../config";
 
 const FinalForm = () => {
+  const [actSectArray, setActSectArray] = useState([]);
+  const [selectedAct, setSelectedAct] = useState("");
+  const [section, setSection] = useState("");
+  const [error, setError] = useState("");
 
+  const handleActChange = (e) => {
+    setSelectedAct(e.target.value);
+  };
 
-const [actSectArray, setActSectArray] = useState([]);
-const [selectedAct, setSelectedAct] = useState("");
-const [section, setSection] = useState("");
-const [error, setError] = useState("");
+  const handleSectionChange = (e) => {
+    const value = e.target.value;
 
-const handleActChange = (e) => {
-  setSelectedAct(e.target.value);
-};
+    // Validate section: only alphabets and numbers, not blank
+    if (/^[A-Za-z0-9]+$/.test(value)) {
+      setSection(value);
+      setError("");
+    } else {
+      setError("Section can only contain alphabets and numbers");
+    }
+  };
 
-const handleSectionChange = (e) => {
-  const value = e.target.value;
+  const handleAddActSection = () => {
+    if (selectedAct !== "Choose..." && section.trim() !== "") {
+      setActSectArray((prevArray) => [
+        ...prevArray,
+        { act: selectedAct, section },
+      ]);
 
-  // Validate section: only alphabets and numbers, not blank
-  if (/^[A-Za-z0-9]+$/.test(value)) {
-    setSection(value);
-    setError("");
-  } else {
-    setError("Section can only contain alphabets and numbers");
-  }
-};
+      setSelectedAct("");
+      setSection("");
+    }
+  };
 
-const handleAddActSection = () => {
-  if (selectedAct !== "Choose..." && section.trim() !== "") {
-    setActSectArray((prevArray) => [
-      ...prevArray,
-      { act: selectedAct, section },
-    ]);
+  const handleRemoveActSection = (index) => {
+    const updatedArray = [...actSectArray];
+    updatedArray.splice(index, 1);
+    setActSectArray(updatedArray);
+  };
 
-    setSelectedAct("");
-    setSection("");
-  }
-};
-
-const handleRemoveActSection = (index) => {
-  const updatedArray = [...actSectArray];
-  updatedArray.splice(index, 1);
-  setActSectArray(updatedArray);
-};
-
-console.log("ActSectArray:", actSectArray);
+  console.log("ActSectArray:", actSectArray);
 
   const [courtType, setCourtType] = useState("");
   const [isScheduled, setIsScheduled] = useState(false);
@@ -350,7 +348,7 @@ console.log("ActSectArray:", actSectArray);
         taluka: locationTaluka,
         village: locationVillage,
       },
-      legalDetails:actSectArray,
+      legalDetails: actSectArray,
     };
     console.log(formData);
     sendDataToBackend(formData);
@@ -417,7 +415,7 @@ console.log("ActSectArray:", actSectArray);
 
           <Tab.Panels>
             <Tab.Panel>
-              <div className="p-4 bg-gray-100 rounded">
+              <div className="p-4 rounded">
                 {/* <form className="space-y-5"> */}
                 <form className="space-y-5" onSubmit={handleSubmit}>
                   {/* <div className=" bg-cyan-50 textcolo">
@@ -449,7 +447,7 @@ console.log("ActSectArray:", actSectArray);
                       />
                     </div>
                     <div>
-                      <label htmlFor="gridState">Nature of Case</label>
+                      <label htmlFor="gridState">Nature ofsadsd Case</label>
                       <input
                         id="natureOfCase"
                         name="natureOfCase"
@@ -520,7 +518,7 @@ console.log("ActSectArray:", actSectArray);
               </div>
             </Tab.Panel>
             <Tab.Panel>
-              <div className="p-4 bg-gray-100 rounded">
+              <div className="p-4  rounded">
                 <form className="space-y-5">
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     <div>
@@ -711,7 +709,7 @@ console.log("ActSectArray:", actSectArray);
               </div>
             </Tab.Panel>
             <Tab.Panel>
-              <div className="p-4 bg-gray-100 rounded">
+              <div className="p-4  rounded">
                 <form className="space-y-5">
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     <div>
@@ -903,7 +901,7 @@ console.log("ActSectArray:", actSectArray);
             </Tab.Panel>
 
             <Tab.Panel>
-              <div className="p-4 bg-gray-100 rounded">
+              <div className="p-4  rounded">
                 <form className="space-y-5">
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     <div>
@@ -1027,60 +1025,60 @@ console.log("ActSectArray:", actSectArray);
                       />
                     </div>
                   </div>
-                  
-                  
-                  
-                  <div>
-        <label htmlFor="gridState">Act</label>
-                    <input id="gridState"
-                    type="text"
-                    placeholder="Enter Prayer"
-                    className="form-input"
-                    value={selectedAct}
-                    onChange={handleActChange}/>
-        </div>
 
-        <div>
-          <label htmlFor="gridSection">Section</label>
-          <input
-            id="gridSection"
-            type="text"
-            placeholder="Enter Section"
-            className={`form-input ${error ? "border-red-500" : ""}`}
-            value={section}
-            onChange={handleSectionChange}
-          />
-          {error && <p className="text-red-500">{error}</p>}
-        </div>
-        <div>
-          <button
-            type="button"
-            onClick={handleAddActSection}
-            className="btn btn-primary mt-2  max-w-max "
-          >
-            Add Act-Section
-          </button>
-      </div>
-      <div className="">
-        {/* <h2 className="btn btn-primary mt-2 w-1/6">Act-Section Pairs:</h2> */}
-        <ul className="">
-          {actSectArray.map((actPair, index) => (
-            <li
-              className="form-input mb-4 mt-4  flex flex-row justify-between items-center "
-              key={index}
-            >
-              Act: {actPair.act}, Section: {actPair.section}
-              <button
-                type="button"
-                onClick={() => handleRemoveActSection(index)}
-                className="bg-red-500 text-white px-2 py-1 rounded ml-6"
-              >
-                Remove
-              </button>
-            </li>
-          ))}
-        </ul>
-      </div>
+                  <div>
+                    <label htmlFor="gridState">Act</label>
+                    <input
+                      id="gridState"
+                      type="text"
+                      placeholder="Enter Prayer"
+                      className="form-input"
+                      value={selectedAct}
+                      onChange={handleActChange}
+                    />
+                  </div>
+
+                  <div>
+                    <label htmlFor="gridSection">Section</label>
+                    <input
+                      id="gridSection"
+                      type="text"
+                      placeholder="Enter Section"
+                      className={`form-input ${error ? "border-red-500" : ""}`}
+                      value={section}
+                      onChange={handleSectionChange}
+                    />
+                    {error && <p className="text-red-500">{error}</p>}
+                  </div>
+                  <div>
+                    <button
+                      type="button"
+                      onClick={handleAddActSection}
+                      className="btn btn-primary mt-2  max-w-max "
+                    >
+                      Add Act-Section
+                    </button>
+                  </div>
+                  <div className="">
+                    {/* <h2 className="btn btn-primary mt-2 w-1/6">Act-Section Pairs:</h2> */}
+                    <ul className="">
+                      {actSectArray.map((actPair, index) => (
+                        <li
+                          className="form-input mb-4 mt-4  flex flex-row justify-between items-center "
+                          key={index}
+                        >
+                          Act: {actPair.act}, Section: {actPair.section}
+                          <button
+                            type="button"
+                            onClick={() => handleRemoveActSection(index)}
+                            className="bg-red-500 text-white px-2 py-1 rounded ml-6"
+                          >
+                            Remove
+                          </button>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
 
                   {/* <button type="submit">Submit</button> */}
                   <button

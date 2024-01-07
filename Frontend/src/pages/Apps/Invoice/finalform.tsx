@@ -64,11 +64,13 @@ const FinalForm = () => {
   const [legalAct, setLegalAct] = useState("");
   const [legalSection, setLegalSection] = useState("");
 
-  const getbackenddata= async () => {
+  const getbackenddata = async () => {
     try {
-      const response: AxiosResponse<any> = await axios.get("https://localhost:5000/cases");
+      const response: AxiosResponse<any> = await axios.get(
+        "https://localhost:5000/cases"
+      );
       console.log("Data sent to the backend:", response.data);
-      if(response.data) {
+      if (response.data) {
         setCourtType(response.data.courtType);
         setIsScheduled(response.data.isScheduled);
         setIsScheduled(response.data.isScheduled);
@@ -90,7 +92,9 @@ const FinalForm = () => {
         setPetitionerExtraName(response.data.petitioner.extraName);
         setPetitionerEmail(response.data.petitioner.email);
         setPetitionerOccupation(response.data.petitioner.occupation);
-        setPetitionerMobileNumber(Number(response.data.petitioner.mobileNumber)); // Convert to number assuming it's an input type number
+        setPetitionerMobileNumber(
+          Number(response.data.petitioner.mobileNumber)
+        ); // Convert to number assuming it's an input type number
         setPetitionerPinCode(Number(response.data.petitioner.pinCode)); // Convert to number assuming it's an input type number
         setPetitionerAddress(response.data.petitioner.address);
         setPetitionerState(response.data.petitioner.state);
@@ -124,27 +128,27 @@ const FinalForm = () => {
         setLocationVillage(response.data.location.village);
         setLegalAct(response.data.legalDetails.act);
         setLegalSection(response.data.legalDetails.section);
-    }
+      }
     } catch (error: any) {
       console.error("Error sending data to the backend:", error);
     }
   };
 
+  useEffect(() => {
+    getbackenddata();
+  }, []);
 
-  useEffect(()=>{
-    getbackenddata()
-  },[])
-
-
-const sendDataToBackend = async (data: any) => {
-  try {
-      const response: AxiosResponse<any> = await axios.post('https://your-backend-url.com/submitFormData', data);
-      console.log('Data sent to the backend:', response.data);
-  } catch (error: any) {
-      console.error('Error sending data to the backend:', error);
-  }
-};
-
+  const sendDataToBackend = async (data: any) => {
+    try {
+      const response: AxiosResponse<any> = await axios.post(
+        "https://your-backend-url.com/submitFormData",
+        data
+      );
+      console.log("Data sent to the backend:", response.data);
+    } catch (error: any) {
+      console.error("Error sending data to the backend:", error);
+    }
+  };
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -217,12 +221,11 @@ const sendDataToBackend = async (data: any) => {
   // this is the code for the geting the user type
   const user = useSelector((state: any) => state.themeConfig.userType);
 
-
   useEffect(() => {
     const fetchData = async () => {
       try {
         const response = await axios.get("https://localhost:5000/usertype");
-        console.log(response.data.type)
+        console.log(response.data.type);
         dispatch(setUserType(response.data.type));
       } catch (error) {
         console.error("Error fetching data:", error);
@@ -426,8 +429,8 @@ const sendDataToBackend = async (data: any) => {
                 <button
                   className={`py-2 px-4 rounded ${
                     selected
-                      ? "bg-blue-500 text-white"
-                      : "bg-gray-200 text-gray-700"
+                      ? "bg-gray-200 text-gray-700"
+                      : "bg-blue-500 text-white"
                   } focus:outline-none`}
                 >
                   Petitioner Details
@@ -464,14 +467,14 @@ const sendDataToBackend = async (data: any) => {
 
           <Tab.Panels>
             <Tab.Panel>
-              <div className="p-4 bg-gray-100 rounded">
+              <div
+                className="p-6
+                rounded"
+              >
                 <form className="space-y-5">
-                  {/* <div className=" bg-cyan-50 textcolo">
-                <h1>District/Establishment</h1>
-            </div> */}
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 dark:text-[#506690] dark:group-hover:text-white-dark">
                     <div>
-                      <label htmlFor="mainDistrict">District</label>
+                      <label htmlFor="mainDistrict">Districta</label>
                       <input
                         id="mainDistrict"
                         name="mainDistrict"
@@ -497,7 +500,7 @@ const sendDataToBackend = async (data: any) => {
                       />
                     </div>
                     <div>
-                      <label htmlFor="gridState">Nature of Case</label>
+                      <label htmlFor="gridState">Nature of safCase</label>
                       <input
                         id="natureOfCase"
                         name="natureOfCase"
@@ -574,7 +577,7 @@ const sendDataToBackend = async (data: any) => {
               </div>
             </Tab.Panel>
             <Tab.Panel>
-              <div className="p-4 bg-gray-100 rounded">
+              <div className="p-4 rounded">
                 <form className="space-y-5">
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     <div>
@@ -780,7 +783,7 @@ const sendDataToBackend = async (data: any) => {
               </div>
             </Tab.Panel>
             <Tab.Panel>
-              <div className="p-4 bg-gray-100 rounded">
+              <div className="p-4  rounded">
                 <form className="space-y-5">
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     <div>
@@ -987,7 +990,7 @@ const sendDataToBackend = async (data: any) => {
             </Tab.Panel>
 
             <Tab.Panel>
-              <div className="p-4 bg-gray-100 rounded">
+              <div className="p-4 rounded">
                 <form className="space-y-5">
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     <div>
@@ -1134,11 +1137,11 @@ const sendDataToBackend = async (data: any) => {
                     />
                   </div>
                   <button
-                  type="submit"
-                  className="btn btn-primary mt-6"
-                  onClick={handleSubmit}
+                    type="submit"
+                    className="btn btn-primary mt-6"
+                    // onClick={handleSubmit}
                   >
-                  Submit
+                    Submit
                   </button>
                 </form>
               </div>

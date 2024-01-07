@@ -36,7 +36,7 @@ const LoginBoxed = () => {
 
       // Handle the response as needed
       console.log("Login successful:", response.data);
-      window.location.href = "/";
+      window.location.href = "/second";
       // Redirect or perform additional logic after successful login
     } catch (error: any) {
       // Handle errors from the backend
