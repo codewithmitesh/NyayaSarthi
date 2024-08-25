@@ -18,20 +18,12 @@
 *** for contributors-url, forks-url, etc. This is an optional, concise syntax you may use.
 *** https://www.markdownguide.org/basic-syntax/#reference-style-links
 -->
-
-[![Contributors][contributors-shield]][contributors-url]
-[![Forks][forks-shield]][forks-url]
-[![Stargazers][stars-shield]][stars-url]
-[![Issues][issues-shield]][issues-url]
-[![MIT License][license-shield]][license-url]
-[![LinkedIn][linkedin-shield]][linkedin-url]
-
 <!-- PROJECT LOGO -->
 <br />
 <div align="center">
-  <a href="https://github.com/othneildrew/Best-README-Template">
+<!--   <a href="https://github.com/othneildrew/Best-README-Template">
     <img src="images/logo.png" alt="Logo" width="80" height="80">
-  </a>
+  </a> -->
 
   <h3 align="center">⚖️ NYAYA SARATHI : Case Flow Management System 🤝</h3>
 
@@ -39,7 +31,7 @@
     🚀 Team Astra_11 - SIH Finalists 2023
     <br />
     <br />
-    <a href="http://teamastra11.s3-website.ap-south-1.amazonaws.com/">View Demo</a>
+    <!-- <a href="http://teamastra11.s3-website.ap-south-1.amazonaws.com/">View Demo</a> --> 
     ·
     <a href="https://docs.google.com/presentation/d/1FDaz4M6ED_Oz6jcyGZHyW-h4kZSaLAuO/edit?usp=drive_link&ouid=116699501435276510266&rtpof=true&sd=true">Presentation</a>
     ·
@@ -216,11 +208,11 @@ Distributed under the MIT License. See `LICENSE.txt` for more information.
 
 <!-- CONTACT -->
 
-## Contact
+<!-- ## Contact -->
+ 
+<!-- Your Name - [@codewithmitesh](https://twitter.com/codewithmitesh) - codewithmitesh@gmail.com -->
 
-Your Name - [@codewithmitesh](https://twitter.com/codewithmitesh) - codewithmitesh@gmail.com
-
-Project Link: [https://github.com/codewithmitesh/NyayaSarthi](https://github.com/codewithmitesh/NyayaSarthi)
+<!-- Project Link: [https://github.com/codewithmitesh/NyayaSarthi](https://github.com/codewithmitesh/NyayaSarthi) -->
 
 <!-- ACKNOWLEDGMENTS -->
 
